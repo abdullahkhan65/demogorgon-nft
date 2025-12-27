@@ -1,0 +1,195 @@
+.runner-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0f 50%, #0a0a1a 100%);
+  padding: 2rem;
+}
+
+.runner-game {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  background: rgba(20, 10, 30, 0.8);
+  border: 3px solid rgba(255, 0, 0, 0.5);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
+}
+
+.runner-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.runner-ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(to bottom, #2d1b3d 0%, #1a1a2e 100%);
+  border-top: 3px solid rgba(255, 0, 0, 0.3);
+}
+
+.runner-bg-line {
+  position: absolute;
+  bottom: 80px;
+  width: 2px;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 0, 0, 0.2) 100%);
+}
+
+.runner-hud {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.runner-score,
+.runner-high-score {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  letter-spacing: 0.1em;
+}
+
+.runner-player {
+  position: absolute;
+  left: 100px;
+  bottom: 80px;
+  width: 50px;
+  height: 60px;
+  z-index: 5;
+}
+
+.player-sprite {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(255, 200, 0, 0.8));
+}
+
+.runner-obstacle {
+  position: absolute;
+  bottom: 80px;
+  font-size: 2.5rem;
+  z-index: 5;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+}
+
+.runner-obstacle.high {
+  bottom: 160px;
+}
+
+.runner-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(10, 5, 15, 0.95);
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.runner-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  letter-spacing: 0.1em;
+}
+
+.runner-title.gameover {
+  color: #ff0000;
+  animation: pulse-red 1s infinite;
+}
+
+.runner-instructions {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.5rem 0;
+}
+
+.runner-instructions-sub {
+  font-size: 0.875rem;
+  color: rgba(255, 200, 0, 0.8);
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.runner-btn {
+  padding: 1rem 2rem;
+  background: rgba(255, 0, 0, 0.3);
+  border: 2px solid rgba(255, 0, 0, 0.8);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.runner-btn:hover {
+  background: rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+}
+
+.runner-stats {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.runner-stats p {
+  margin: 0.25rem 0;
+}
+
+.runner-score-final {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 1rem 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.runner-xp-earned {
+  font-size: 1.25rem;
+  color: rgba(255, 200, 0, 0.9);
+  font-weight: 700;
+  margin: 0.5rem 0 1.5rem 0;
+  text-shadow: 0 0 10px rgba(255, 200, 0, 0.5);
+}
+
+.runner-new-record {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffd700;
+  margin: 1rem 0;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.8);
+  }
+}
