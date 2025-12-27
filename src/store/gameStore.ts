@@ -21,6 +21,7 @@ export interface UserProfile {
   };
   achievements: Achievement[];
   nftsCollected: string[];
+  vecnaModeActive: boolean;
 }
 
 interface GameState {
@@ -34,6 +35,7 @@ interface GameState {
   unlockAchievement: (achievementId: string) => void;
   setSplashScreenSeen: () => void;
   collectNFT: (nftId: string) => void;
+  toggleVecnaMode: () => void;
 }
 
 const LEVEL_XP_THRESHOLD = 1000;
@@ -97,6 +99,7 @@ export const useGameStore = create<GameState>()(
         },
         achievements: initialAchievements,
         nftsCollected: [],
+        vecnaModeActive: false,
       },
       splashScreenSeen: false,
       levelUpCallback: null,
@@ -217,6 +220,14 @@ export const useGameStore = create<GameState>()(
             },
           };
         }),
+
+      toggleVecnaMode: () =>
+        set((state) => ({
+          user: {
+            ...state.user,
+            vecnaModeActive: !state.user.vecnaModeActive,
+          },
+        })),
     }),
     {
       name: 'demogorgon-game-storage',
