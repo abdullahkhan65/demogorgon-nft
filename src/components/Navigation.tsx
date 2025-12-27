@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaHome, FaImage, FaGamepad, FaUser } from 'react-icons/fa';
+import { FaHome, FaImage } from 'react-icons/fa';
 import { useGameStore } from '../store/gameStore';
 import './Navigation.css';
 
@@ -11,8 +11,6 @@ export const Navigation = () => {
   const navItems = [
     { path: '/', label: 'Home', icon: <FaHome /> },
     { path: '/gallery', label: 'Gallery', icon: <FaImage /> },
-    { path: '/games', label: 'Games', icon: <FaGamepad /> },
-    { path: '/profile', label: 'Profile', icon: <FaUser /> },
   ];
 
   const xpProgress = (user.xp % 1000) / 1000;
