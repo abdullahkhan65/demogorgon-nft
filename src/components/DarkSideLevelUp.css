@@ -168,18 +168,19 @@
 
 /* Message */
 .dark-side-message {
-  font-size: 56px;
-  font-weight: bold;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 600;
   margin-bottom: 60px;
-  background: linear-gradient(135deg, #ff0044, #8b0000, #ff0044);
+  background: linear-gradient(135deg, #e8e6e3, #ff0044, #8b0000, #ff0044, #e8e6e3);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 60px rgba(255, 0, 68, 0.8);
+  text-shadow: 0 4px 40px rgba(255, 0, 68, 0.7);
   animation: message-glitch 0.5s infinite, gradient-shift 3s infinite;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
 }
 
 @keyframes message-glitch {
@@ -281,22 +282,25 @@
 }
 
 .level-text {
-  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
   font-weight: 600;
-  color: #ff6b9d;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
+  color: rgba(232, 230, 227, 0.7);
+  letter-spacing: 0.2em;
+  text-shadow: 0 2px 12px rgba(255, 107, 157, 0.5);
 }
 
 .level-number {
-  font-size: 80px;
-  font-weight: bold;
-  background: linear-gradient(135deg, #ff0044, #ffc800);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 88px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #e8e6e3, #ff6b9d, #ffc800);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 40px rgba(255, 0, 68, 0.8);
+  text-shadow: 0 4px 32px rgba(255, 0, 68, 0.7);
   animation: number-glow 1.5s infinite;
+  letter-spacing: -0.02em;
 }
 
 @keyframes number-glow {
