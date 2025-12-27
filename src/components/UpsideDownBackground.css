@@ -225,6 +225,32 @@ body.glitch-effect {
   animation: screen-glitch 0.3s;
 }
 
+/* Legendary/Mythic pickup effect */
+body.legendary-pickup {
+  animation: legendary-flash 1s ease-out;
+}
+
+@keyframes legendary-flash {
+  0% {
+    filter: brightness(1);
+  }
+  10% {
+    filter: brightness(2) saturate(2) hue-rotate(20deg);
+  }
+  20% {
+    filter: brightness(0.5) contrast(1.5);
+  }
+  30% {
+    filter: brightness(1.8) saturate(3);
+  }
+  50% {
+    filter: brightness(1.2) contrast(1.2) drop-shadow(0 0 50px gold);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
 @keyframes screen-glitch {
   0%, 100% {
     transform: translate(0);

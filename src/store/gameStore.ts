@@ -26,6 +26,8 @@ export interface UserProfile {
 interface GameState {
   user: UserProfile;
   splashScreenSeen: boolean;
+  levelUpCallback: ((newLevel: number) => void) | null;
+  setLevelUpCallback: (callback: (newLevel: number) => void) => void;
   addXP: (amount: number) => void;
   incrementGamesPlayed: () => void;
   updateHighScore: (game: 'demogorgonRunner' | 'mindFlayerMatch', score: number) => void;
@@ -97,11 +99,21 @@ export const useGameStore = create<GameState>()(
         nftsCollected: [],
       },
       splashScreenSeen: false,
+      levelUpCallback: null,
+
+      setLevelUpCallback: (callback) =>
+        set({ levelUpCallback: callback }),
 
       addXP: (amount) =>
         set((state) => {
+          const oldLevel = state.user.level;
           const newXP = state.user.xp + amount;
           const newLevel = Math.floor(newXP / LEVEL_XP_THRESHOLD) + 1;
+
+          // Trigger level up callback if level increased
+          if (newLevel > oldLevel && state.levelUpCallback) {
+            state.levelUpCallback(newLevel);
+          }
 
           const updatedAchievements = state.user.achievements.map((ach) => {
             if (ach.id === 'level_5' && newLevel >= 5 && !ach.unlocked) {
@@ -208,6 +220,10 @@ export const useGameStore = create<GameState>()(
     }),
     {
       name: 'demogorgon-game-storage',
+      partialize: (state) => ({
+        user: state.user,
+        // Don't persist splashScreenSeen or levelUpCallback - they reset on page load
+      }),
     }
   )
 );

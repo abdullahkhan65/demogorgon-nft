@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { nftCollection, rarityColors, rarityGlow, type NFT } from '../data/nftData';
 import { useGameStore } from '../store/gameStore';
+import { DarkSideLevelUp } from './DarkSideLevelUp';
+import { playLowBassNote, playGlitchSound } from '../utils/sound';
 import './UpsideDownBackground.css';
 
 interface AshParticle {
@@ -32,10 +34,21 @@ export const UpsideDownBackground = () => {
   const [streakTimer, setStreakTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
   const [showReward, setShowReward] = useState(false);
   const [rewardMessage, setRewardMessage] = useState('');
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [newLevel, setNewLevel] = useState(1);
   const addXP = useGameStore((state) => state.addXP);
+  const setLevelUpCallback = useGameStore((state) => state.setLevelUpCallback);
   const ashParticlesRef = useRef<AshParticle[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastNFTSpawnRef = useRef<number>(0);
+
+  // Setup level-up callback
+  useEffect(() => {
+    setLevelUpCallback((level: number) => {
+      setNewLevel(level);
+      setShowLevelUp(true);
+    });
+  }, [setLevelUpCallback]);
 
   // Initialize ash particles
   useEffect(() => {
@@ -53,8 +66,8 @@ export const UpsideDownBackground = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Create ash particles (more than before for dense effect)
-    const particleCount = 150;
+    // Create ash particles (subtle mysterious atmosphere)
+    const particleCount = 200;
     ashParticlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -105,6 +118,15 @@ export const UpsideDownBackground = () => {
   const handleNFTClick = (drop: NFTDrop, event: React.MouseEvent) => {
     event.stopPropagation();
 
+    // Special effect for Legendary/Mythic pickups
+    if (drop.nft.rarity === 'Legendary' || drop.nft.rarity === 'Mythic') {
+      document.body.classList.add('legendary-pickup');
+      playGlitchSound();
+      setTimeout(() => {
+        document.body.classList.remove('legendary-pickup');
+      }, 1000);
+    }
+
     // Remove clicked NFT
     setNftDrops((prev) => prev.filter((d) => d.id !== drop.id));
 
@@ -144,8 +166,9 @@ export const UpsideDownBackground = () => {
       setShowReward(true);
       setStreak(0);
 
-      // Trigger screen glitch effect
+      // Trigger screen glitch effect and sound
       document.body.classList.add('glitch-effect');
+      playLowBassNote(1200);
 
       setTimeout(() => {
         document.body.classList.remove('glitch-effect');
@@ -182,11 +205,21 @@ export const UpsideDownBackground = () => {
         if (particle.x < 0) particle.x = canvas.width;
         if (particle.x > canvas.width) particle.x = 0;
 
-        // Draw ash particle (darker colors for Upside Down)
-        ctx.fillStyle = `rgba(80, 80, 80, ${particle.opacity * (0.5 + particle.depth * 0.5)})`;
+        // Draw ash particle with subtle glow
+        const alpha = particle.opacity * (0.5 + particle.depth * 0.3);
+
+        // Add subtle glow
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = `rgba(100, 100, 100, ${alpha * 0.5})`;
+
+        // Draw main particle
+        ctx.fillStyle = `rgba(120, 120, 120, ${alpha})`;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
+
+        // Reset shadow
+        ctx.shadowBlur = 0;
       });
 
       animationFrameRef.current = requestAnimationFrame(animate);
@@ -278,6 +311,14 @@ export const UpsideDownBackground = () => {
           <div className="reward-glitch">The Upside Down noticed you.</div>
           <div className="reward-xp">{rewardMessage}</div>
         </div>
+      )}
+
+      {/* Level Up Screen */}
+      {showLevelUp && (
+        <DarkSideLevelUp
+          level={newLevel}
+          onComplete={() => setShowLevelUp(false)}
+        />
       )}
     </>
   );
